@@ -7,10 +7,12 @@ public class BrickLayout {
 
     private ArrayList<Brick> bricks;
     private int[][] grid;
+    private int brickIndex = 0;
 
     public BrickLayout(String inputFile) {
         ArrayList<String> fileData = getFileData(inputFile);
-        ArrayList<Brick> bricks = new ArrayList<Brick>();
+        bricks = new ArrayList<Brick>();
+
         for (String line : fileData) {
             String[] points = line.split(",");
             int start = Integer.parseInt(points[0]);
@@ -18,6 +20,7 @@ public class BrickLayout {
             Brick b = new Brick(start, end);
             bricks.add(b);
         }
+
         grid = new int[30][40];
     }
 
@@ -26,11 +29,25 @@ public class BrickLayout {
     }
 
     public void dropOneBrick() {
+        if (brickIndex >= bricks.size()) {
+            return;
+        }
 
+        Brick b = bricks.get(brickIndex);
+
+        int row = grid.length - 1;
+
+        for (int col = b.getStart(); col <= b.getEnd(); col++) {
+            grid[row][col] = 1;
+        }
+
+        brickIndex++;
     }
-    public  ArrayList<String> getFileData(String fileName) {
+
+    public ArrayList<String> getFileData(String fileName) {
         File f = new File(fileName);
         Scanner s = null;
+
         try {
             s = new Scanner(f);
         }
@@ -38,9 +55,12 @@ public class BrickLayout {
             System.out.println("File not found.");
             System.exit(1);
         }
+
         ArrayList<String> fileData = new ArrayList<String>();
-        while (s.hasNextLine())
+
+        while (s.hasNextLine()) {
             fileData.add(s.nextLine());
+        }
 
         return fileData;
     }
