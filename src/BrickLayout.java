@@ -26,9 +26,8 @@ public class BrickLayout {
     }
 
     public void dropOneBrick() {
-        // implement dropping the most brick into grid
-    }
 
+    }
     public  ArrayList<String> getFileData(String fileName) {
         File f = new File(fileName);
         Scanner s = null;
