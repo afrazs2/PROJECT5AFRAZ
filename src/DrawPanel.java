@@ -41,6 +41,7 @@ public class DrawPanel extends JPanel implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         layout.dropOneBrick();
+
     }
 
     @Override

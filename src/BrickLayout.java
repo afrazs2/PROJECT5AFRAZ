@@ -35,13 +35,27 @@ public class BrickLayout {
 
         Brick b = bricks.get(brickIndex);
 
-        int row = grid.length - 1;
+        int row = 0;
+
+        while (row + 1 < grid.length && canMoveDown(row, b)) {
+            row++;
+        }
 
         for (int col = b.getStart(); col <= b.getEnd(); col++) {
             grid[row][col] = 1;
         }
 
-        brickIndex++;
+        brickIndex++; // drops a brick, still havent figured out how to do the dropping animation
+    }
+
+    private boolean canMoveDown(int row, Brick b) {
+        for (int col = b.getStart(); col <= b.getEnd(); col++)
+        {
+            if (grid[row + 1][col] == 1) {
+                return false;
+            }
+        }
+        return true; // helper checks if the bricks can move down
     }
 
     public ArrayList<String> getFileData(String fileName) {
