@@ -6,13 +6,13 @@ import javax.swing.JPanel;
 public class DrawPanel extends JPanel implements MouseListener {
 
     BrickLayout layout;
-    private static long  moveTime;  // stores time of when bricks moved down last
-    private static long dropTime; //stores when a new brick is added
+    private static long move;  // stores time of when bricks moved down last
+    private static long drop; //stores when a new brick is added
     public DrawPanel() {
         this.addMouseListener(this);
         layout = new BrickLayout("src/input_file");
-        moveTime = System.currentTimeMillis();
-        dropTime = System.currentTimeMillis();
+        move = System.currentTimeMillis();
+        drop = System.currentTimeMillis();
     }
 
 
@@ -20,14 +20,14 @@ public class DrawPanel extends JPanel implements MouseListener {
         super.paintComponent(g);
         long time = System.currentTimeMillis();
 
-        if ((time - moveTime) > 100) { // chcks how much time it has been since the last brick has dropped, if it is over 100 ms then it drops another
-            layout.moveBrickDown();
-            moveTime = System.currentTimeMillis(); //reset
+        if ((time - move) > 100) { // chcks how much time it has been since the last brick has dropped, if it is over 100 ms then it drops another
+            layout.falldown();
+            move = System.currentTimeMillis(); //reset
         }
 
-        if ((time - dropTime) > 250){ // checks how much time another brick is created, must be greater than above
+        if ((time - drop) > 250){ // checks how much time another brick is created, must be greater than above
             layout.dropOneBrick();
-            dropTime = System.currentTimeMillis(); //reset
+            drop = System.currentTimeMillis(); //reset
         }
         int[][] grid = layout.getGrid();
         int x = 10;
